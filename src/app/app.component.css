@@ -1,0 +1,50 @@
+div.stockValue span, div.stockName span {
+    display: inline-flex;
+}
+
+.detailsPanel {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stockValue, .stockName {
+    padding: 15px;
+}
+
+div.submitButton {
+    float: right;
+    margin-right: 2px;
+}
+
+div.finalSubmit {
+    margin: auto;
+}
+
+div.finalSubmit button {
+    width: 60%;
+}
+
+.card {
+    width: 150px;
+    border: 0;
+    border-radius: 5px;
+    height: 80px;
+    background: #d8ddde;
+    margin: 10px;
+}
+
+.cardName {
+    background: #303131;
+    margin: 0;
+    margin-top: 10px;
+    color: #d8ddde;
+}
+
+.cardValue {
+    margin: 0;
+    color: #303131;
+}
