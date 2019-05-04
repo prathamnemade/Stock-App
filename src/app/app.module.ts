@@ -7,14 +7,21 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import { AddStockService } from './add-stock.service';
+import {DataTableModule} from 'primeng/datatable';
+import {MultiSelectModule} from 'primeng/multiselect';
+import { TimePipe } from './timeUpdate.pipe';
+import {DialogModule} from 'primeng/dialog';
+import {ChartModule} from 'primeng/chart';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,TimePipe
   ],
   imports: [
-    BrowserModule,BrowserAnimationsModule,InputTextModule, FormsModule, ReactiveFormsModule,ButtonModule,HttpClientModule
+    ChartModule,DialogModule,MultiSelectModule,DataTableModule,BrowserModule,BrowserAnimationsModule,InputTextModule, FormsModule, ReactiveFormsModule,ButtonModule,HttpClientModule
   ],
   providers: [AddStockService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports:[]
 })
 export class AppModule { }

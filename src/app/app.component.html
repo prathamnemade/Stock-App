@@ -1,16 +1,45 @@
-<div class="row" style="width: 100vw;height: 100vh;">
-  <div class="col-md-7" style="border-right: 2px solid;">
-    hi
+<p-dialog [dismissableMask]="true" header="Stock Detail" [(visible)]="display" [modal]="true" [responsive]="true"
+  [style]="{width: '50%',background:'white',margin:'auto'}" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+  <div>
+    <h4>{{lineChartHeader.name}}</h4>
+    <h6>Opened At : {{lineChartHeader.history?lineChartHeader.history[0].price:0}}</h6>
+    <h6>Current Value : {{lineChartHeader.history?lineChartHeader.history[lineChartHeader.history.length-1].price:0}}</h6>
+    <p-chart type="line" [data]="data"></p-chart>
+  </div>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Close"></button>
+  </p-footer>
+</p-dialog>
+<div class="row mainPanel">
+  <div class="col-md-7">
+    <table>
+      <tr>
+        <th>Name of Stock</th>
+        <th>Up/Down</th>
+        <th>Price</th>
+        <th>%Change</th>
+        <th>Last Updated</th>
+      </tr>
+      <tr *ngFor="let stock of addStockService.stocksToManipulate;let i=index ">
+        <td class="row{{i}}" (click)="showLineGraph(stock)">{{stock.name}}</td>
+        <td class="row{{i}}" (click)="showLineGraph(stock)" [ngClass]="{'upColor':upDownCheck(stock)=='Up','downColor':upDownCheck(stock)=='Down','baseColor':upDownCheck(stock)=='Base'}">{{upDownCheck(stock)}}</td>
+        <td class="row{{i}}" (click)="showLineGraph(stock)">{{stock.history[stock.history.length-1].price}}</td>
+        <td class="row{{i}}" (click)="showLineGraph(stock)">{{percentChange(stock)|number}}
+          %</td>
+        <td class="row{{i}}" (click)="showLineGraph(stock)">{{(currentTime-stock.history[stock.history.length-1].time
+          )/1000 | updatedTime}}</td>
+      </tr>
+    </table>
   </div>
   <div class="col-md-5">
     <div class="row detailsPanel">
-      <form [formGroup]="addStockForm" (ngSubmit)="addStockService.submitStockDetails(addStockForm.value)">
-        <h5>Fill fill below to change the Stocks!!</h5>
+      <form [formGroup]="addStockForm" (ngSubmit)="addStockService.submitStockDetails(addStockForm.value)" class="formBox">
+        <h5>Fill below to update the Stocks!!</h5>
         <div class="row stockName">
           <span>
             <i class="pi pi-info-circle" style="font-size: 3em"></i>
             <span class="ui-float-label">
-              <input id="float-input" type="text" size="30" pInputText formControlName='stockName'>
+              <input id="float-input" type="text" size="30" pInputText formControlName='stockName' style="text-transform:uppercase">
               <label for="float-input">Name</label>
             </span>
           </span>
@@ -18,13 +47,13 @@
         <div class="row stockValue">
           <i class="pi pi-dollar" style="font-size: 3em"></i>
           <span class="ui-float-label">
-            <input id="float-input" type="text" size="30" pInputText formControlName='stockValue'>
+            <input id="float-input" type="text" (click)="count=0;count1=0;" (keydown)="restrictLetters($event)" size="30" pInputText
+              formControlName='stockValue'>
             <label for="float-input">Value</label>
           </span>
         </div>
         <div class="row submitButton">
-          <button [disabled]='!addStockForm.valid || addStockService.allStocksToSubmit.length==10'
-            class="btn btn-success">SUBMIT</button>
+          <button [disabled]='!addStockForm.valid || addStockService.allStocksToSubmit.length==10' class="btn btn-success">SUBMIT</button>
         </div>
       </form>
     </div>
